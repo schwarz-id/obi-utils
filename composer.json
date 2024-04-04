@@ -1,12 +1,12 @@
 {
-    "name": "dastiii/obi-utils",
+    "name": "schwarz-id/obi-utils",
     "description": "This is my package obi-utils",
     "keywords": [
         "schwarz.id",
         "laravel",
         "obi-utils"
     ],
-    "homepage": "https://github.com/dastiii/obi-utils",
+    "homepage": "https://github.com/schwarz-id/obi-utils",
     "license": "MIT",
     "authors": [
         {
