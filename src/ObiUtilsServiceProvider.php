@@ -17,9 +17,6 @@ class ObiUtilsServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('obi-utils')
-            ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_obi-utils_table')
-            ->hasCommand(ObiUtilsCommand::class);
+            ->hasConfigFile();
     }
 }
