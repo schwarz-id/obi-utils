@@ -4,8 +4,8 @@ namespace SchwarzID\ObiUtils;
 
 use SchwarzID\ObiUtils\Contracts\Number;
 
-readonly class Gtin implements Number {
-
+readonly class Gtin implements Number
+{
     public function __construct(
         protected string $number
     ) {

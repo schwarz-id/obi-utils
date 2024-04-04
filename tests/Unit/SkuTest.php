@@ -21,7 +21,7 @@ it('does not accept skus with an invalid checksum', function ($sku) {
 it('accepts valid skus as string or integer', function ($sku) {
     $skuObj = new \SchwarzID\ObiUtils\Sku($sku);
 
-    expect($skuObj->getNumber())->toBe((string)$sku);
+    expect($skuObj->getNumber())->toBe((string) $sku);
 })->with(['1234566', 1234566]);
 
 it('accepts valid skus', function ($sku) {
@@ -33,13 +33,13 @@ it('accepts valid skus', function ($sku) {
 it('can be cast to string', function ($sku) {
     $skuObj = new \SchwarzID\ObiUtils\Sku($sku);
 
-    expect((string)$skuObj)->toBe($sku);
+    expect((string) $skuObj)->toBe($sku);
 })->with(['1234566', '3761236']);
 
 it('can return the check digit and number with out check digit', function ($sku) {
     $skuObj = new \SchwarzID\ObiUtils\Sku($sku);
 
-    expect($skuObj->getCheckDigit())->toBe((int)substr($sku, -1))
+    expect($skuObj->getCheckDigit())->toBe((int) substr($sku, -1))
         ->and($skuObj->getNumberWithoutCheckDigit())->toBe(substr($sku, 0, -1));
 })->with(['1234566', '3761236']);
 
