@@ -2,7 +2,6 @@
 
 namespace SchwarzID\ObiUtils;
 
-use SchwarzID\ObiUtils\Commands\ObiUtilsCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 

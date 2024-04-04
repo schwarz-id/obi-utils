@@ -10,8 +10,10 @@ use SchwarzID\ObiUtils\Exceptions\NonNumericSku;
 /***
  * @throws InvalidSkuLength
  */
-readonly class Sku implements Number {
+readonly class Sku implements Number
+{
     protected int $number;
+
     protected int $checkDigit;
 
     /**
@@ -28,7 +30,7 @@ readonly class Sku implements Number {
         }
 
         // allow only numbers
-        if (!preg_match('/^\d+$/', $number)) {
+        if (! preg_match('/^\d+$/', $number)) {
             throw new NonNumericSku();
         }
 
@@ -61,7 +63,7 @@ readonly class Sku implements Number {
     {
         try {
             $sku = new self($input);
-        } catch (InvalidSkuLength | NonNumericSku | InvalidSkuCheckDigit) {
+        } catch (InvalidSkuLength|NonNumericSku|InvalidSkuCheckDigit) {
             return false;
         }
 
