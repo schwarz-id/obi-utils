@@ -15,7 +15,7 @@ class ObiSku
             $sku = new Sku($sku);
 
             return true;
-        } catch (NonNumericSku | InvalidSkuLength | InvalidSkuCheckDigit) {
+        } catch (NonNumericSku|InvalidSkuLength|InvalidSkuCheckDigit) {
             return false;
         }
     }
@@ -46,7 +46,7 @@ class ObiSku
         $number = (string) $number;
 
         // Add a trailing zero if the number is only 6 digits long
-        $number = strlen($number) === 6 ? $number. '0' : $number;
+        $number = strlen($number) === 6 ? $number.'0' : $number;
 
         return (new Sku($number, throwOnInvalidCheckDigit: false))->getCheckDigit();
     }

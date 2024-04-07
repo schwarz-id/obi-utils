@@ -13,7 +13,9 @@ use SchwarzID\ObiUtils\Exceptions\NonNumericSku;
 readonly class Sku implements Number
 {
     protected int $inputCheckDigit;
+
     protected int $number;
+
     protected int $checkDigit;
 
     /**
@@ -23,7 +25,7 @@ readonly class Sku implements Number
      */
     public function __construct(
         int|string $number,
-        bool       $throwOnInvalidCheckDigit = true,
+        bool $throwOnInvalidCheckDigit = true,
     ) {
         $number = (string) $number;
 
