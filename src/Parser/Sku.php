@@ -1,6 +1,6 @@
 <?php
 
-namespace SchwarzID\ObiUtils;
+namespace SchwarzID\ObiUtils\Parser;
 
 use SchwarzID\ObiUtils\Contracts\Number;
 use SchwarzID\ObiUtils\Exceptions\InvalidSkuCheckDigit;
@@ -12,8 +12,8 @@ use SchwarzID\ObiUtils\Exceptions\NonNumericSku;
  */
 readonly class Sku implements Number
 {
+    protected int $inputCheckDigit;
     protected int $number;
-
     protected int $checkDigit;
 
     /**
@@ -23,8 +23,10 @@ readonly class Sku implements Number
      */
     public function __construct(
         int|string $number,
-        bool $forceValidCheckDigit = true,
+        bool       $throwOnInvalidCheckDigit = true,
     ) {
+        $number = (string) $number;
+
         if (strlen($number) !== 7) {
             throw new InvalidSkuLength();
         }
@@ -34,13 +36,13 @@ readonly class Sku implements Number
             throw new NonNumericSku();
         }
 
-        $originalCheckDigit = (int) substr($number, -1);
+        $this->inputCheckDigit = (int) substr($number, -1);
 
         $this->number = (int) substr($number, 0, -1);
-        $this->checkDigit = self::calculateCheckDigit((string) $this->number);
+        $this->checkDigit = $this->calculateCheckDigit((string) $this->number);
 
-        if (($originalCheckDigit !== $this->checkDigit) && $forceValidCheckDigit) {
-            throw new InvalidSkuCheckDigit($this->checkDigit, $originalCheckDigit);
+        if (($this->inputCheckDigit !== $this->checkDigit) && $throwOnInvalidCheckDigit) {
+            throw new InvalidSkuCheckDigit($this->checkDigit, $this->inputCheckDigit);
         }
     }
 
@@ -54,23 +56,22 @@ readonly class Sku implements Number
         return $this->checkDigit;
     }
 
+    public function getInputCheckDigit(): int
+    {
+        return $this->inputCheckDigit;
+    }
+
     public function getNumberWithoutCheckDigit(): string
     {
         return (string) $this->number;
     }
 
-    public static function validate(string $input): bool
+    public function validate(int|string $input): bool
     {
-        try {
-            $sku = new self($input);
-        } catch (InvalidSkuLength|NonNumericSku|InvalidSkuCheckDigit) {
-            return false;
-        }
-
-        return $sku->getCheckDigit() === (int) substr($input, -1);
+        return $this->getCheckDigit() === $this->getInputCheckDigit();
     }
 
-    public static function calculateCheckDigit(string $number): int
+    public function calculateCheckDigit(string $number): int
     {
         $digits = array_map(fn ($digit) => (int) $digit, str_split($number));
 

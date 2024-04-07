@@ -34,8 +34,7 @@
     },
     "autoload": {
         "psr-4": {
-            "SchwarzID\\ObiUtils\\": "src/",
-            "SchwarzID\\ObiUtils\\Database\\Factories\\": "database/factories/"
+            "SchwarzID\\ObiUtils\\": "src/"
         }
     },
     "autoload-dev": {

@@ -1,6 +1,6 @@
 <?php
 
-namespace SchwarzID\ObiUtils;
+namespace SchwarzID\ObiUtils\Parser;
 
 use SchwarzID\ObiUtils\Contracts\Number;
 
