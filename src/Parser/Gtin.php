@@ -10,7 +10,9 @@ use SchwarzID\ObiUtils\Exceptions\NonNumericGtin;
 readonly class Gtin implements Number
 {
     protected int $inputCheckDigit;
+
     protected int $number;
+
     protected int $checkDigit;
 
     /**
@@ -20,18 +22,18 @@ readonly class Gtin implements Number
      */
     public function __construct(
         int|string $number,
-        bool       $throwOnInvalidCheckDigit = true,
+        bool $throwOnInvalidCheckDigit = true,
     ) {
         $number = (string) $number;
 
         match (strlen($number)) {
             13, 8 => null,
-            default => throw new InvalidGtinLength(),
+            default => throw new InvalidGtinLength,
         };
 
         // allow only numbers
         if (! preg_match('/^\d+$/', $number)) {
-            throw new NonNumericGtin();
+            throw new NonNumericGtin;
         }
 
         $this->inputCheckDigit = (int) substr($number, -1);

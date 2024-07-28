@@ -30,12 +30,12 @@ readonly class Sku implements Number
         $number = (string) $number;
 
         if (strlen($number) !== 7) {
-            throw new InvalidSkuLength();
+            throw new InvalidSkuLength;
         }
 
         // allow only numbers
         if (! preg_match('/^\d+$/', $number)) {
-            throw new NonNumericSku();
+            throw new NonNumericSku;
         }
 
         $this->inputCheckDigit = (int) substr($number, -1);

@@ -4,29 +4,27 @@ namespace SchwarzID\ObiUtils;
 
 use Exception;
 use http\Exception\InvalidArgumentException;
+use Picqer\Barcode\BarcodeGeneratorJPG;
 use SchwarzID\ObiUtils\DTO\Barcode;
-use SchwarzID\ObiUtils\DTO\BarcodeData;
 use SchwarzID\ObiUtils\Exceptions\InvalidGtinLength;
 use SchwarzID\ObiUtils\Parser\Sku;
-use SchwarzID\ObiUtils\Support\BarcodeType;
-use Picqer\Barcode\BarcodeGeneratorJPG;
 
 class ObiBarcodeGenerator
 {
-    public static function fromGtinAsBase64(string $gtin): ?String
+    public static function fromGtinAsBase64(string $gtin): ?string
     {
         try {
             $gtin = new Parser\Gtin($gtin);
 
-            $barcodeGenerator = new BarcodeGeneratorJPG();
+            $barcodeGenerator = new BarcodeGeneratorJPG;
 
             $barcodeType = match (strlen($gtin->getNumber())) {
                 13 => $barcodeGenerator::TYPE_EAN_13,
                 8 => $barcodeGenerator::TYPE_EAN_8,
-                default => throw new InvalidGtinLength(),
+                default => throw new InvalidGtinLength,
             };
 
-            $base64Barcode = "data:image/jpeg;base64,";
+            $base64Barcode = 'data:image/jpeg;base64,';
             $base64Barcode .= base64_encode($barcodeGenerator->getBarcode($gtin->getNumber(), $barcodeType, 8, 120));
 
             return $base64Barcode;
@@ -36,19 +34,19 @@ class ObiBarcodeGenerator
         }
     }
 
-    public static function fromSkuAsBase64(string $sku): ?String
+    public static function fromSkuAsBase64(string $sku): ?string
     {
         try {
             $sku = new Sku($sku);
 
-            $barcodeGenerator = new BarcodeGeneratorJPG();
+            $barcodeGenerator = new BarcodeGeneratorJPG;
 
             // Construct raw barcode data
             $barcodeData = $sku->getNumberWithoutCheckDigit();
             $barcodeData .= '0000002';
             $barcodeData .= self::calculateItfChecksum($barcodeData);
 
-            $base64Barcode = "data:image/jpeg;base64,";
+            $base64Barcode = 'data:image/jpeg;base64,';
             $base64Barcode .= base64_encode($barcodeGenerator->getBarcode($barcodeData, $barcodeGenerator::TYPE_INTERLEAVED_2_5, 8, 120));
 
             return $base64Barcode;
