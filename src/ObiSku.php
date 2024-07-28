@@ -12,7 +12,7 @@ class ObiSku
     public function validate(int|string $sku): bool
     {
         try {
-            $sku = new Sku($sku);
+            new Sku($sku);
 
             return true;
         } catch (NonNumericSku|InvalidSkuLength|InvalidSkuCheckDigit) {
