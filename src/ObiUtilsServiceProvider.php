@@ -22,7 +22,7 @@ class ObiUtilsServiceProvider extends PackageServiceProvider
     public function packageRegistered(): void
     {
         $this->app->bind(ObiUtils::class, function () {
-            return new ObiUtils();
+            return new ObiUtils;
         });
     }
 }

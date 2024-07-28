@@ -9,6 +9,5 @@ readonly class Barcode
     public function __construct(
         public BarcodeType $type,
         public BarcodeData $data,
-    ) {
-    }
+    ) {}
 }

@@ -6,7 +6,8 @@ use Exception;
 
 class NonNumericGtin extends Exception
 {
-    public function __construct(?string $message = null) {
+    public function __construct(?string $message = null)
+    {
         parent::__construct($message === null ? 'The GTIN must must be numeric and only consist of digits.' : $message);
     }
 }

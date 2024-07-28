@@ -8,6 +8,5 @@ readonly class BarcodeData
         public string $number,
         public string $rawData,
         public ?string $price = null,
-    ) {
-    }
+    ) {}
 }
