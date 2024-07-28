@@ -15,12 +15,13 @@ class ValidSku implements ValidationRule
     {
         try {
             new Sku($value);
-        } catch (InvalidSkuLength $e) {
-            $fail('The :attribute must be exactly 7 characters long.')->translate();
-        } catch (NonNumericSku $e) {
-            $fail('The :attribute must be a numeric value.')->translate();
-        } catch (InvalidSkuCheckDigit $e) {
-            $fail('The :attribute has an invalid check digit.')->translate();
+        } catch (\Exception $e) {
+            match ($e::class) {
+                InvalidSkuLength::class => $fail('The :attribute must be exactly 7 characters long.'),
+                NonNumericSku::class => $fail('The :attribute must be a numeric value.'),
+                InvalidSkuCheckDigit::class => $fail('The :attribute has an invalid check digit.'),
+                default => $fail('The :attribute is invalid.'),
+            };
         }
     }
 }
